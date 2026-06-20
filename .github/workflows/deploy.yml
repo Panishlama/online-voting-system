@@ -22,6 +22,6 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: Deploy to Railway
-        uses: railwayapp/railway-action@v3
+        uses: railwayapp/railway-action@v2
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
