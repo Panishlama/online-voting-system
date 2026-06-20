@@ -8,7 +8,7 @@ public class MySQLUtil {
 
     private static final String URL = "jdbc:mysql://localhost:3306/votingdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "Pasang@123";  // ← XAMPP default is EMPTY
+    private static final String PASSWORD = "";  // ← XAMPP default is EMPTY
 
     private static Connection connection = null;
 
