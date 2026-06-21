@@ -89,7 +89,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Spring Boot Plugin to make WAR executable -->
+            <!-- Spring Boot Plugin - Makes WAR Executable -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
