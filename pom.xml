@@ -65,23 +65,6 @@
             <artifactId>json</artifactId>
             <version>20230227</version>
         </dependency>
-
-        <!-- Embedded Tomcat 10 Dependencies -->
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>10.1.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <version>10.1.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jsp-api</artifactId>
-            <version>10.1.11</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -106,54 +89,18 @@
                 </configuration>
             </plugin>
 
-            <!-- Cargo Plugin for Tomcat 10 -->
+            <!-- Spring Boot Plugin to make WAR executable -->
             <plugin>
-                <groupId>org.codehaus.cargo</groupId>
-                <artifactId>cargo-maven3-plugin</artifactId>
-                <version>1.10.6</version>
-                <configuration>
-                    <container>
-                        <containerId>tomcat10x</containerId>
-                        <type>embedded</type>
-                    </container>
-                    <configuration>
-                        <properties>
-                            <cargo.servlet.port>${PORT:8080}</cargo.servlet.port>
-                            <cargo.context.path>/</cargo.context.path>
-                        </properties>
-                    </configuration>
-                    <deployables>
-                        <deployable>
-                            <groupId>${project.groupId}</groupId>
-                            <artifactId>${project.artifactId}</artifactId>
-                            <type>war</type>
-                            <properties>
-                                <context>/</context>
-                            </properties>
-                        </deployable>
-                    </deployables>
-                </configuration>
-            </plugin>
-
-            <!-- Exec Maven Plugin to run Tomcat -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>java</goal>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>org.apache.catalina.startup.Tomcat</mainClass>
-                    <arguments>
-                        <argument>-port</argument>
-                        <argument>${PORT:8080}</argument>
-                    </arguments>
-                </configuration>
             </plugin>
         </plugins>
     </build>
