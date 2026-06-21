@@ -65,6 +65,23 @@
             <artifactId>json</artifactId>
             <version>20230227</version>
         </dependency>
+
+        <!-- Embedded Tomcat 10 Dependencies -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>10.1.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>10.1.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <version>10.1.11</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -115,6 +132,27 @@
                             </properties>
                         </deployable>
                     </deployables>
+                </configuration>
+            </plugin>
+
+            <!-- Exec Maven Plugin to run Tomcat -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>org.apache.catalina.startup.Tomcat</mainClass>
+                    <arguments>
+                        <argument>-port</argument>
+                        <argument>${PORT:8080}</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
