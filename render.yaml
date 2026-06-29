@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: online-voting-system
+    runtime: docker
+    plan: free
+    region: oregon  # Change to your nearest region
+    
+    # Docker configuration
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    
+    # Port binding
+    ports:
+      - port: 8080
+        protocol: http
+    
+    # Environment variables
+    envVars:
+      - key: DB_HOST
+        value: ${mysql.MYSQL_HOST}
+      - key: DB_PORT
+        value: ${mysql.MYSQL_PORT}
+      - key: DB_NAME
+        value: ${mysql.MYSQL_DATABASE}
+      - key: DB_USERNAME
+        value: ${mysql.MYSQL_USER}
+      - key: DB_PASSWORD
+        fromService:
+          type: pserv
+          name: mysql
+          property: MYSQL_ROOT_PASSWORD
+      - key: JAVA_OPTS
+        value: "-Xmx256m -Xms128m"
+      - key: PORT
+        value: "8080"
+    
+    # Health check
+    healthCheckPath: /health
+    
+  - type: pserv
+    name: mysql
+    runtime: mysql-8.0
+    plan: free
+    region: oregon
+    
+    # MySQL configuration
+    ipAllowList: []  # Allow all IPs from Render
+    
+    envVars:
+      - key: MYSQL_ROOT_PASSWORD
+        generateValue: true  # Auto-generates secure password
+      - key: MYSQL_DATABASE
+        value: votingdb
+      - key: MYSQL_USER
+        value: voting_user
+      - key: MYSQL_PASSWORD
+        generateValue: true
